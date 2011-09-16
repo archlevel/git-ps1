@@ -57,7 +57,7 @@ COLOR=$COLOR_DEFAULT
 
 # uncommited files
 if [ "$IND_UNSTAGED" != '0' ]; then
-    git diff --no-ext-diff --quiet --exit-code || \
+    git diff --no-ext-diff --quiet --exit-code 2>/dev/null || \
         STATUS="${STATUS}${COLOR_UNSTAGED}${IND_UNSTAGED}"
 fi
 
@@ -75,7 +75,7 @@ fi
 
 # untracked
 if [ "$IND_UNTRACKED" != '0' ]; then
-    if [ -n "$( git ls-files --others --exclude-standard )" ]; then
+    if [ -n "$( git ls-files --others --exclude-standard 2>/dev/null )" ]; then
         STATUS="${STATUS}${COLOR_UNTRACKED}${IND_UNTRACKED}"
     fi
 fi
