@@ -43,6 +43,7 @@ COLOR_STAGED=$( mkcolor ${GITPS1_COLOR_STAGED:-32} )
 COLOR_UNTRACKED=$( mkcolor ${GITPS1_COLOR_UNTRACKED:-31} )
 COLOR_UNSTAGED=$( mkcolor ${GITPS1_COLOR_UNSTAGED:-33} )
 COLOR_AHEAD=$( mkcolor ${GITPS1_COLOR_AHEAD:-33} )
+COLOR_CLR=$( mkcolor 0 )
 
 # indicators may be overridden via the GITPS1_IND_* environment vars; set to
 # '0' to disable
@@ -97,4 +98,4 @@ if [ "$IND_AHEAD" != '0' ]; then
 fi
 
 # output the status string
-echo " $COLOR[${BRANCH}${STATUS}${COLOR}]"
+echo " $COLOR[${BRANCH}${STATUS}${COLOR}]$COLOR_CLR"
