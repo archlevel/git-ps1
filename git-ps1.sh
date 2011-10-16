@@ -83,7 +83,7 @@ fi
 
 # ahead of tracking
 if [ "$IND_AHEAD" != '0' ]; then
-    if [ "$( echo $GIT_STATUS | grep 'is ahead' )" ]; then
+    grep -q 'is ahead' <<< "$GIT_STATUS" && {
         STATUS="${STATUS}${COLOR_AHEAD}${IND_AHEAD}"
 
         # append count?
@@ -94,7 +94,7 @@ if [ "$IND_AHEAD" != '0' ]; then
             )
             STATUS="${STATUS}${AHEAD_COUNT}"
         fi
-    fi
+    }
 fi
 
 # output the status string
