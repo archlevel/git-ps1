@@ -102,11 +102,7 @@ fi
 
 # state message
 if [ "$ind_state" != '0' ]; then
-    statefile="$(__gitdir)/COMMIT_EDITMSG_PREFIX"
-    if [ -e "$statefile" ]; then
-        statemsg=$( cat "$statefile" 2>/dev/null )
-        state=" $color_state($statemsg)"
-    fi
+    statemsg=$( git state 2>/dev/null ) && state=" $color_state($statemsg)"
 fi
 
 # output the status string
