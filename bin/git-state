@@ -80,10 +80,8 @@ _hookinit()
 branch=$( git symbolic-ref HEAD 2>/dev/null )
 branch=${branch#refs/heads/}
 
-msg=$(cat "$1" )
-prefix=$( grep "^$branch" "$1_PREFIX" 2>/dev/null \
-  | cut -d' ' -f2-
-)
+msg=$( cat "$1" )
+prefix=$( git state )
 
 if [ -n "$prefix" ]; then
     echo "[$prefix] $msg" > "$1"
@@ -127,6 +125,14 @@ _hookinit || {
   echo "fatal: Could not initialize prepare-commit-msg hook" >&2
   exit 1
 }
+
+# if no message was provided, simply output the current value
+if [ -z "$@" ]; then
+  grep "^$branch" "$msgpath" 2>/dev/null \
+    | cut -d' ' -f2-
+
+  exit
+fi
 
 # clear the message and re-set it
 _clearmsg
