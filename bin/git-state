@@ -81,7 +81,7 @@ branch=$( git symbolic-ref HEAD 2>/dev/null )
 branch=${branch#refs/heads/}
 
 msg=$( cat "$1" )
-prefix=$( git state )
+prefix=$( git state | tr -d '\n' )
 
 if [ -n "$prefix" ]; then
     echo "[$prefix] $msg" > "$1"
@@ -128,10 +128,18 @@ _hookinit || {
 
 # if no message was provided, simply output the current value
 if [ -z "$@" ]; then
-  grep "^$branch" "$msgpath" 2>/dev/null \
+  statemsg=$( grep "^$branch" "$msgpath" 2>/dev/null \
     | cut -d' ' -f2-
+  )
 
-  exit
+  # output state message and exit with 0 status if state message is set
+  if [ -n "$statemsg" ]; then
+    echo "$statemsg"
+    exit
+  fi
+
+  # no state message; exit with non-zero status to indicate absence
+  exit 1
 fi
 
 # clear the message and re-set it
