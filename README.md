@@ -26,22 +26,24 @@ where echoing the escape sequence will produce the intended result.
 All configuration is done via `GITPS1_*` environment variables.
 
 Indicators (set to '0' to disable)
-  `GITPS1_IND_STAGED`      - Staged changes
-  `GITPS1_IND_UNSTAGED`    - Unstaged changes
-  `GITPS1_IND_UNTRACKED`   - Untracked files
-  `GITPS1_IND_AHEAD`       - Ahead of tracking branch
-  `GITPS1_IND_AHEAD_COUNT` - Whether to display number of commits ahead (e.g. @5)
-  `GITPS1_IND_STATE`       - Whether to display state string (see git-supp)
+
+* `GITPS1_IND_STAGED`      - Staged changes
+* `GITPS1_IND_UNSTAGED`    - Unstaged changes
+* `GITPS1_IND_UNTRACKED`   - Untracked files
+* `GITPS1_IND_AHEAD`       - Ahead of tracking branch
+* `GITPS1_IND_AHEAD_COUNT` - Whether to display number of commits ahead (e.g. @5)
+* `GITPS1_IND_STATE`       - Whether to display state string (see git-supp)
 
 Colors:
-  `GITPS1_COLOR_DEFAULT`   - Default color, used to display brackets and branch
-  `GITPS1_COLOR_FASTFWD`   - Color used for fast-forward indicator and used to
-                           display brackets and hash when not on a branch
-  `GITPS1_COLOR_STAGED`    - Color used to for staged changes indicator
-  `GITPS1_COLOR_UNTRACKED` - Color used for untracked files indicator
-  `GITPS1_COLOR_UNSTAGED`  - Color used for unstaged changes indicator
-  `GITPS1_COLOR_AHEAD`     - Color used for ahead indicator (ahead of tracking)
-  `GITPS1_COLOR_STATE`     - Color used for state string (see git-supp)
+
+* `GITPS1_COLOR_DEFAULT`   - Default color, used to display brackets and branch
+* `GITPS1_COLOR_FASTFWD`   - Color used for fast-forward indicator and used to
+                             display brackets and hash when not on a branch
+* `GITPS1_COLOR_STAGED`    - Color used to for staged changes indicator
+* `GITPS1_COLOR_UNTRACKED` - Color used for untracked files indicator
+* `GITPS1_COLOR_UNSTAGED`  - Color used for unstaged changes indicator
+* `GITPS1_COLOR_AHEAD`     - Color used for ahead indicator (ahead of tracking)
+* `GITPS1_COLOR_STATE`     - Color used for state string (see git-supp)
 
 
 # git state
@@ -64,7 +66,7 @@ This concept is intended to aid in the following scenarios:
   the current state of the branch.
 
 ## Usage
-```
+```sh
 $ git state foo     # sets the state to "foo"
 $ git state         # retrieve the current state
 foo
@@ -72,7 +74,8 @@ $ git state --clear # clear the state
 ```
 
 Remember - states are tied to the current branch:
-```
+
+```sh
 $ git state foo
 $ git state
 foo
