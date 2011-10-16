@@ -11,6 +11,7 @@ However, these characters are not recognized when output from an external
 script. Therefore, the script must be inserted directly into the PS1 string,
 where echoing the escape sequence will produce the intended result.
 
+
 CONFIGURATION
 -------------
 All configuration is done via GITPS1_* environment variables.
@@ -21,6 +22,7 @@ Indicators (set to '0' to disable)
   GITPS1_IND_UNTRACKED   - Untracked files
   GITPS1_IND_AHEAD       - Ahead of tracking branch
   GITPS1_IND_AHEAD_COUNT - Whether to display number of commits ahead (e.g. @5)
+  GITPS1_IND_STATE       - Whether to display state string (see git-supp)
 
 Colors:
   GITPS1_COLOR_DEFAULT   - Default color, used to display brackets and branch
@@ -30,4 +32,10 @@ Colors:
   GITPS1_COLOR_UNTRACKED - Color used for untracked files indicator
   GITPS1_COLOR_UNSTAGED  - Color used for unstaged changes indicator
   GITPS1_COLOR_AHEAD     - Color used for ahead indicator (ahead of tracking)
+  GITPS1_COLOR_STATE     - Color used for state string (see git-supp)
 
+
+SEE ALSO
+--------
+The git-supp repository contains additional feature that may be indicated by
+git-ps1, such as the state string.

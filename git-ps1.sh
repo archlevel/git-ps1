@@ -43,6 +43,7 @@ COLOR_STAGED=$( mkcolor ${GITPS1_COLOR_STAGED:-32} )
 COLOR_UNTRACKED=$( mkcolor ${GITPS1_COLOR_UNTRACKED:-31} )
 COLOR_UNSTAGED=$( mkcolor ${GITPS1_COLOR_UNSTAGED:-33} )
 COLOR_AHEAD=$( mkcolor ${GITPS1_COLOR_AHEAD:-33} )
+color_state=$( mkcolor ${GITPS1_COLOR_STATE:-35} )
 COLOR_CLR=$( mkcolor 0 )
 
 # indicators may be overridden via the GITPS1_IND_* environment vars; set to
@@ -52,8 +53,10 @@ IND_UNSTAGED=${GITPS1_IND_UNSTAGED:-*}
 IND_UNTRACKED=${GITPS1_IND_UNTRACKED:-*}
 IND_AHEAD=${GITPS1_IND_AHEAD:-@}
 IND_AHEAD_COUNT=${GITPS1_IND_AHEAD_COUNT:-@}
+ind_state=${GITPS1_IND_STATE:-1}
 
 STATUS=''
+statemsg=''
 COLOR=$COLOR_DEFAULT
 
 # uncommited files
@@ -97,5 +100,14 @@ if [ "$IND_AHEAD" != '0' ]; then
     }
 fi
 
+# state message
+if [ "$ind_state" != '0' ]; then
+    statefile="$(__gitdir)/COMMIT_EDITMSG_PREFIX"
+    if [ -e "$statefile" ]; then
+        statemsg=$( cat "$statefile" 2>/dev/null )
+        state=" $color_state($statemsg)"
+    fi
+fi
+
 # output the status string
-echo " $COLOR[${BRANCH}${STATUS}${COLOR}]$COLOR_CLR"
+echo " $COLOR[${BRANCH}${STATUS}${COLOR}]$state$COLOR_CLR"
