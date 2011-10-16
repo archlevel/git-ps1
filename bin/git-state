@@ -144,5 +144,5 @@ fi
 
 # clear the message and re-set it
 _clearmsg
-echo "$branch $@" > "$msgpath"
+echo "$branch $@" >> "$msgpath"
 
