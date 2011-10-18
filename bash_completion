@@ -33,8 +33,7 @@ __git-supp_shortmap ()
 }
 
 # load shortmaps from cwd (or provided path) and home dir (if available)
-__git_supp_maps=$( cat ${1:-.}/shortmaps ~/.git-supp-shortmaps 2>/dev/null )
-
+__git_supp_maps=$( cat ${1:-./shortmaps} ~/.git-supp-shortmaps 2>/dev/null )
 
 # register each shortmap
 IFS=$'\n'
@@ -42,6 +41,8 @@ for line in $__git_supp_maps; do
   IFS=$' '
   set -- $line
   short=$1
+
+  [ -z "$1" ] && continue
 
   __git-supp_docomplete "$1" __git-supp_shortmap
 
