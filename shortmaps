@@ -1,7 +1,14 @@
-p _git_push :push
-P _git_pull :pull
-s _git_stash :stash
+a _git_add :add
+A _git_add :add -A
 c _git_commit :commit
 C _git_commit :commit -am
+co _git_checkout :checkout
+d _git_diff :diff
+f _git_fetch :fetch
+m _git_merge :merge
+p _git_push :push
+P _git_pull :pull
+s _git_status :status
+S _git_stash :stash
 t void tig
-? void __git-ps1_list-short
+T _git_tag :tag
