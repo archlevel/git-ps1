@@ -1,0 +1,7 @@
+p _git_push :push
+P _git_pull :pull
+s _git_stash :stash
+c _git_commit :commit
+C _git_commit :commit -am
+t void tig
+? void __git-ps1_list-short
