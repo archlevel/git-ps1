@@ -10,7 +10,7 @@ p _git_push :push
 P _git_pull :pull
 s _git_status :status
 S _git_stash :stash
-t void tig
+t : tig
 T _git_tag :tag
-- void :checkout -
--- void |cd "$( git rev-parse --git-dir 2>/dev/null )/../"
+- : :checkout -
+-- : |cd "$( git rev-parse --git-dir 2>/dev/null )/../"
