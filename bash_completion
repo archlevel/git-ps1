@@ -16,6 +16,18 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # #
 
+
+_git_state ()
+{
+  _get_comp_words_by_ref -n =: cur
+
+  case "$cur" in
+    --*)
+      __gitcomp "--clear";;
+  esac
+}
+
+
 __git-supp_docomplete ()
 {
   # ignore problem commands
