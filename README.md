@@ -81,6 +81,9 @@ By default, the following mappings are available, each with tab completion:
 * `-` - git checkout -
 * `--` - `cd` to root dir of repository
 
+The shortmaps may only be used within a git repository. Otherwise, they will
+invoke the actual command on the system.
+
 ## Configuration
 The file format is as follows:
 
