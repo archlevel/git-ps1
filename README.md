@@ -61,6 +61,26 @@ $ . bash_completion ./shortmaps
 
 You may also add your own mappings to `~/.git-ps1-shortmaps`.
 
+## Usage
+By default, the following mappings are available, each with tab completion:
+
+* `a` - git add
+* `A` - git add -A
+* `c` - git commit
+* `C` - git commit -am
+* `co` - git checkout
+* `d` - git diff
+* `f` - git fetch
+* `m` - git merge
+* `p` - git push
+* `P` - git pull
+* `s` - git status
+* `S` - git stash
+* `t` - execute tig
+* `T` - git tag
+* `-` - git checkout -
+* `--` - `cd` to root dir of repository
+
 ## Configuration
 The file format is as follows:
 
