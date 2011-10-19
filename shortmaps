@@ -8,7 +8,7 @@ f _git_fetch :fetch
 m _git_merge :merge
 p _git_push :push
 P _git_pull :pull
-s _git_status :status
+s : :status
 S _git_stash :stash
 t : tig
 T _git_tag :tag
