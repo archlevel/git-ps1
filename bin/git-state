@@ -129,7 +129,7 @@ _hookinit || {
 }
 
 # if no message was provided, simply output the current value
-if [ -z "$@" ]; then
+if [ -z "$*" ]; then
   statemsg=$( grep "^$branch" "$msgpath" 2>/dev/null \
     | cut -d' ' -f2-
   )
