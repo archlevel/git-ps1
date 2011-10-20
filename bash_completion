@@ -80,14 +80,8 @@ __git-supp_shortalias ()
 }
 
 # functions that cannot be aliased
-- ()
-{
-  __git-supp_shortalias - "$@"
-}
--- ()
-{
-  __git-supp_shortalias -- "$@"
-}
+- () { __git-supp_shortalias - "$@"; }
+-- () { __git-supp_shortalias -- "$@"; }
 
 # load shortmaps from cwd (or provided path) and home dir (if available)
 __git_supp_maps=$(
