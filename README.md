@@ -148,3 +148,11 @@ foo
 Add the repository's `bin/` directory to your `PATH` environment variable, or
 copy the script into your `PATH`.
 
+## Configuration
+Configuration can be done via `git config`. The following options are available:
+
+* `state.delim.left` - String to be used for left portion of delimiter (default
+  '[')
+* `state.delim.right` - String to be used for right portion of delimiter
+  (default: ']')
+

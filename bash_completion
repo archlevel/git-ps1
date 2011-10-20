@@ -27,6 +27,18 @@ _git_state ()
   esac
 }
 
+# override their config function to provide our own options
+eval "$( echo '_prev_git_config ()'; declare -f _git_config | tail -n +2 )"
+_git_config ()
+{
+  _prev_git_config
+
+  _get_comp_words_by_ref -n =: cur prev
+
+  # add our configuration options
+  COMPREPLY=( ${COMPREPLY[@]-} state.delim.left state.delim.right )
+}
+
 
 __git-supp_docomplete ()
 {
