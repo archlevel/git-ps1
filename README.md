@@ -48,7 +48,8 @@ Colors:
 
 # shortmaps / BASH Completion
 The `bash_completion` file contains BASH completion for custom commands and
-"shortmaps", which provide single-character aliases to common Git commands.
+"shortmaps", which provide single or double-character aliases to common Git
+commands.
 
 ## Setup
 Source the `bash_completion` file (e.g. place in `.bashrc` or in
@@ -66,6 +67,11 @@ By default, the following mappings are available, each with tab completion:
 
 * `a` - git add
 * `A` - git add -A
+* `b` - git bisect
+* `bs` - git bisect start
+* `bg` - git bisect good
+* `bb` - git bisect bad
+* `br` - git bisect reset
 * `c` - git commit
 * `C` - git commit -am
 * `co` - git checkout
@@ -83,6 +89,13 @@ By default, the following mappings are available, each with tab completion:
 
 The shortmaps may only be used within a git repository. Otherwise, they will
 invoke the actual command on the system.
+
+If a command conflicts with an existing command on your system (e.g. `bg`), wrap
+the command in quotes to invoke the actual command. For example:
+
+```shell
+$ 'bg'  # invoke actual 'bg' command rather than shortmap
+```
 
 ## Configuration
 The file format is as follows:
