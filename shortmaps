@@ -1,10 +1,10 @@
 a _git_add :add
 A _git_add :add -A
-b _git_bisect :bisect
-bs _git_bisect :bisect start
-bg _git_bisect :bisect good
-bb _git_bisect :bisect bad
-br _git_bisect :bisect reset
+B _git_bisect :bisect
+Bs _git_bisect :bisect start
+Bg _git_bisect :bisect good
+Bb _git_bisect :bisect bad
+Br _git_bisect :bisect reset
 c _git_commit :commit
 C _git_commit :commit -am
 co _git_checkout :checkout

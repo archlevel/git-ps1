@@ -67,11 +67,11 @@ By default, the following mappings are available, each with tab completion:
 
 * `a` - git add
 * `A` - git add -A
-* `b` - git bisect
-* `bs` - git bisect start
-* `bg` - git bisect good
-* `bb` - git bisect bad
-* `br` - git bisect reset
+* `B` - git bisect
+* `Bs` - git bisect start
+* `Bg` - git bisect good
+* `Bb` - git bisect bad
+* `Br` - git bisect reset
 * `c` - git commit
 * `C` - git commit -am
 * `co` - git checkout
@@ -94,12 +94,8 @@ By default, the following mappings are available, each with tab completion:
 The shortmaps may only be used within a git repository. Otherwise, they will
 invoke the actual command on the system.
 
-If a command conflicts with an existing command on your system (e.g. `bg`), wrap
-the command in quotes to invoke the actual command. For example:
-
-```shell
-$ 'bg'  # invoke actual 'bg' command rather than shortmap
-```
+If a command conflicts with an existing command on your system, wrap the command
+in quotes to invoke the actual command.
 
 ## Configuration
 The file format is as follows:
