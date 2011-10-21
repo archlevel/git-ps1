@@ -80,6 +80,10 @@ By default, the following mappings are available, each with tab completion:
 * `m` - git merge
 * `p` - git push
 * `P` - git pull
+* `R` - git rebase
+* `Ri` - git rebase --interactive
+* `Ra` - git rebase --abort
+* `Rc` - git rebase --continue
 * `s` - git status
 * `S` - git stash
 * `t` - execute tig

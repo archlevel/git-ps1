@@ -13,10 +13,10 @@ f _git_fetch :fetch
 m _git_merge :merge
 p _git_push :push
 P _git_pull :pull
-r __git_rebase :rebase
-ri _git_rebase :rebase --interactive
-ra _git_rebase :rebase --abort
-rc _git_rebase :rebase --continue
+R __git_rebase :rebase
+Ri _git_rebase :rebase --interactive
+Ra _git_rebase :rebase --abort
+Rc _git_rebase :rebase --continue
 s : :status
 S _git_stash :stash
 t : tig
