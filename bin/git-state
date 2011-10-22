@@ -84,9 +84,13 @@ msg=$( cat "$1" )
 prefix=$( git state | tr -d '\n' )
 dl=$( git config state.delim.left || echo '[' )
 dr=$( git config state.delim.right || echo ']' )
+statemsg="$dl$prefix$dr "
+
+# do not include statemsg if it's already found in the message
+grep -oF "$statemsg" <<< "$msg" && statemsg=""
 
 if [ -n "$prefix" ]; then
-    echo "$dl$prefix$dr $msg" > "$1"
+    echo "$statemsg$msg" > "$1"
 fi
 EOF
 
