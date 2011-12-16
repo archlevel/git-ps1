@@ -18,12 +18,12 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # #
 
-BRANCH=$(git symbolic-ref HEAD 2>/dev/null \
+branch=$(git symbolic-ref HEAD 2>/dev/null \
     || git rev-parse HEAD 2>/dev/null | cut -c1-10 \
 )
 
 # if no branch or hash was returned, then we're not in a repository
-if [ -z "$BRANCH" ]; then
+if [ -z "$branch" ]; then
     exit
 fi
 
@@ -33,69 +33,77 @@ mkcolor()
     echo "\[\033[00;$1m\]"
 }
 
-BRANCH=${BRANCH#refs/heads/}
-GIT_STATUS=$( git status 2>/dev/null )
+branch=${branch#refs/heads/}
+git_status=$( git status 2>/dev/null )
 
 # colors can be overridden via the GITPS1_COLOR_* environment variables
-COLOR_DEFAULT=$( mkcolor ${GITPS1_COLOR_DEFAULT:-33} )
-COLOR_FASTFWD=$( mkcolor ${GITPS1_COLOR_FASTFWD:-31} )
-COLOR_STAGED=$( mkcolor ${GITPS1_COLOR_STAGED:-32} )
-COLOR_UNTRACKED=$( mkcolor ${GITPS1_COLOR_UNTRACKED:-31} )
-COLOR_UNSTAGED=$( mkcolor ${GITPS1_COLOR_UNSTAGED:-33} )
-COLOR_AHEAD=$( mkcolor ${GITPS1_COLOR_AHEAD:-33} )
-COLOR_CLR=$( mkcolor 0 )
+color_default=$( mkcolor ${GITPS1_COLOR_DEFAULT:-33} )
+color_fastfwd=$( mkcolor ${GITPS1_COLOR_FASTFWD:-31} )
+color_staged=$( mkcolor ${GITPS1_COLOR_STAGED:-32} )
+color_untracked=$( mkcolor ${GITPS1_COLOR_UNTRACKED:-31} )
+color_unstaged=$( mkcolor ${GITPS1_COLOR_UNSTAGED:-33} )
+color_ahead=$( mkcolor ${GITPS1_COLOR_AHEAD:-33} )
+color_state=$( mkcolor ${GITPS1_COLOR_STATE:-35} )
+color_clr=$( mkcolor 0 )
 
 # indicators may be overridden via the GITPS1_IND_* environment vars; set to
 # '0' to disable
-IND_STAGED=${GITPS1_IND_STAGED:-*}
-IND_UNSTAGED=${GITPS1_IND_UNSTAGED:-*}
-IND_UNTRACKED=${GITPS1_IND_UNTRACKED:-*}
-IND_AHEAD=${GITPS1_IND_AHEAD:-@}
-IND_AHEAD_COUNT=${GITPS1_IND_AHEAD_COUNT:-@}
+ind_staged=${GITPS1_IND_STAGED:-*}
+ind_unstaged=${GITPS1_IND_UNSTAGED:-*}
+ind_untracked=${GITPS1_IND_UNTRACKED:-*}
+ind_ahead=${GITPS1_IND_AHEAD:-@}
+ind_ahead_count=${GITPS1_IND_AHEAD_COUNT:-@}
+ind_state=${GITPS1_IND_STATE:-1}
 
-STATUS=''
-COLOR=$COLOR_DEFAULT
+statusmsg=''
+statemsg=''
+color=$color_default
 
 # uncommited files
-if [ "$IND_UNSTAGED" != '0' ]; then
+if [ "$ind_unstaged" != '0' ]; then
     git diff --no-ext-diff --quiet --exit-code 2>/dev/null || \
-        STATUS="${STATUS}${COLOR_UNSTAGED}${IND_UNSTAGED}"
+        statusmsg="${statusmsg}${color_unstaged}${ind_unstaged}"
 fi
 
 # not on branch/behind origin
-if [ "$( echo $GIT_STATUS | grep 'Not currently on\|is behind' )" ]; then
-    COLOR=$COLOR_FASTFWD
+if [ "$( echo $git_status | grep 'Not currently on\|is behind' )" ]; then
+    color=$color_fastfwd
 fi
 
 # staged
-if [  "$IND_STAGED" != '0' ]; then
-    if [ "$( echo $GIT_STATUS | grep 'to be committed' )" ]; then
-        STATUS="${STATUS}${COLOR_STAGED}${IND_STAGED}"
+if [  "$ind_staged" != '0' ]; then
+    if [ "$( echo $git_status | grep 'to be committed' )" ]; then
+        statusmsg="${statusmsg}${color_staged}${ind_staged}"
     fi
 fi
 
 # untracked
-if [ "$IND_UNTRACKED" != '0' ]; then
+if [ "$ind_untracked" != '0' ]; then
     if [ -n "$( git ls-files --others --exclude-standard 2>/dev/null )" ]; then
-        STATUS="${STATUS}${COLOR_UNTRACKED}${IND_UNTRACKED}"
+        statusmsg="${statusmsg}${color_untracked}${ind_untracked}"
     fi
 fi
 
 # ahead of tracking
-if [ "$IND_AHEAD" != '0' ]; then
-    grep -q 'is ahead' <<< "$GIT_STATUS" && {
-        STATUS="${STATUS}${COLOR_AHEAD}${IND_AHEAD}"
+if [ "$ind_ahead" != '0' ]; then
+    grep -q 'is ahead' <<< "$git_status" && {
+        statusmsg="${statusmsg}${color_ahead}${ind_ahead}"
 
         # append count?
-        if [ "$IND_AHEAD_COUNT" != '0' ]; then
-            AHEAD_COUNT=$( echo $GIT_STATUS \
+        if [ "$ind_ahead_count" != '0' ]; then
+            ahead_count=$( echo $git_status \
                 | grep -o 'by [0-9]\+ commits\?' \
                 | cut -d' ' -f2 \
             )
-            STATUS="${STATUS}${AHEAD_COUNT}"
+            statusmsg="${statusmsg}${ahead_count}"
         fi
     }
 fi
 
+# state message
+if [ "$ind_state" != '0' ]; then
+    statemsg=$( git state 2>/dev/null ) && state=" $color_state($statemsg)"
+fi
+
 # output the status string
-echo "$COLOR[${BRANCH}${STATUS}${COLOR}]$COLOR_CLR "
+echo "$color[${branch}${statusmsg}${color}]$state$color_clr "
