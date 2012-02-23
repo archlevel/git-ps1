@@ -139,6 +139,16 @@ foo
 $ git state --clear # clear the state
 ```
 
+The previous state is stored for each branch, allowing for quick switches
+between states using `-` as the message (much like `cd -`):
+
+```sh
+$ git state foo  # sets the state to "foo"
+$ git state bar  # sets the state to "bar"
+$ git state -    # sets the state to "foo"
+$ git state -    # sets the state to "bar"
+```
+
 Remember - states are tied to the current branch:
 
 ```sh

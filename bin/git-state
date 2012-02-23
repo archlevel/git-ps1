@@ -33,16 +33,28 @@ fi
 
 
 ##
-# Removes the state for the current branch
+# Stores current state for current branch and removes any associated stale
+# states (providing one historical state for the branch)
 ##
 _clearmsg()
 {
-  local msgpath_tmp="$msgpath.tmp"
+  local bname="${branch/\//\/}"
 
-  if [ -f "$msgpath" ]; then
-    grep -v "^$branch" "$msgpath" > "$msgpath_tmp"
-    mv "$msgpath_tmp" "$msgpath"
-  fi
+  # remove stale branch state and mark current branch state as previous (which
+  # will be removed next time the state is set for this branch again)
+  [ -f "$msgpath" ] && \
+      sed -i "/^-$bname/d;s/^$bname/-&/" "$msgpath"
+}
+
+
+##
+# Retrieve the current state message for the current branch, or an alternate
+# state as specified by an optional prefix
+_getmsg()
+{
+  local pre="$1"
+  grep "^${pre}$branch" "$msgpath" 2>/dev/null \
+    | cut -d' ' -f2-
 }
 
 
@@ -134,9 +146,7 @@ _hookinit || {
 
 # if no message was provided, simply output the current value
 if [ -z "$*" ]; then
-  statemsg=$( grep "^$branch" "$msgpath" 2>/dev/null \
-    | cut -d' ' -f2-
-  )
+  statemsg=$( _getmsg )
 
   # output state message and exit with 0 status if state message is set
   if [ -n "$statemsg" ]; then
@@ -148,7 +158,12 @@ if [ -z "$*" ]; then
   exit 1
 fi
 
-# clear the message and re-set it
+# the message will be, by default, the remainder of our arguments; dash will
+# indicate that the previous state should be used in place of the message
+msg="$@"
+[ "$msg" == '-' ] && msg=$( _getmsg - )
+
+# clear the previous message and set the new
 _clearmsg
-echo "$branch $@" >> "$msgpath"
+echo "$branch $msg" >> "$msgpath"
 
