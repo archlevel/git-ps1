@@ -38,7 +38,7 @@ fi
 ##
 _clearmsg()
 {
-  local bname="${branch/\//\/}"
+  local bname="${branch//\//\/}"
 
   # remove stale branch state and mark current branch state as previous (which
   # will be removed next time the state is set for this branch again)
