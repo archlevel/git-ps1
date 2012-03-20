@@ -35,6 +35,9 @@ mkcolor()
 
 branch=${branch#refs/heads/}
 git_status=$( git status 2>/dev/null )
+if [ "$?" != '0' ]; then
+    exit
+fi
 
 # colors can be overridden via the GITPS1_COLOR_* environment variables
 color_default=$( mkcolor ${GITPS1_COLOR_DEFAULT:-33} )
